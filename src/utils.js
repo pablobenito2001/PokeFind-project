@@ -10,7 +10,7 @@ const typesPokemon = {
     "ghost" : '../public/images/pokeTypes/ghost.png',
     "grass" : '../public/images/pokeTypes/grass.png',
     "ground" : '../public/images/pokeTypes/ground.png',
-    "ice" : '../public/images/pokeTypes/bug.ice',
+    "ice" : '../public/images/pokeTypes/ice.png',
     "normal" : '../public/images/pokeTypes/normal.png',
     "poison" : '../public/images/pokeTypes/poison.png',
     "psychic" : '../public/images/pokeTypes/psychic.png',
