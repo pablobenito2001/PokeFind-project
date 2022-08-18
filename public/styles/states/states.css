@@ -5,3 +5,18 @@
     box-shadow: 8px 8px 15px var(--dark-shadow),
     -8px -8px 15px var(--ligth-shadow);
 }
+
+.isHeader{
+    color: white;
+    box-shadow: 40px 40px 75px var(--blue-Dshadow),
+    -40px -40px 75px var(--blue-Lshadow);
+}
+
+.isHeader img{
+    filter: unset;
+}
+
+.isHeaderType{
+    box-shadow: 6px 6px 12px var(--blue-Dshadow),
+            -6px -6px 12px var(--blue-Lshadow);
+}

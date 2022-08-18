@@ -4,7 +4,7 @@ const typesPokemon = {
     "dragon" : '../public/images/pokeTypes/dragon.png',
     "electric" : '../public/images/pokeTypes/electric.png',
     "fairy" : '../public/images/pokeTypes/fairy.png',
-    "figthing" : '../public/images/pokeTypes/figthing.png',
+    "fighting" : '../public/images/pokeTypes/fighting.png',
     "fire" : '../public/images/pokeTypes/fire.png',
     "flying" : '../public/images/pokeTypes/flying.png',
     "ghost" : '../public/images/pokeTypes/ghost.png',
@@ -18,16 +18,6 @@ const typesPokemon = {
     "steel" : '../public/images/pokeTypes/steel.png',
     "water" : '../public/images/pokeTypes/water.png',
     "default" : '#'
-}
-
-
-function typePoke(elem){
-    console.log(elem);
-    return(
-        `<div class="pokeCard--type">
-            <img src="${typesPokemon[elem.toLowerCase()] || typesPokemon['default']}" alt="${typesPokemon[elem.toLowerCase()]} type">
-        </div>`
-    )
 }
 
 function shadowGenerate(color, lum){
@@ -68,10 +58,31 @@ function renderPokeCard(elem){
     )
 }
 
+function renderPokeCardHeader(elem){
+    let [name, id, type, sprite] = elem;
+    return (`
+    <div class="pokeCard isHeader" id="${id}">
+    <img src="${sprite}" alt="imagen de pokemon bb" class="pokeCardHeader--image">
+    <div class="pokeCard--text">
+        <h2>${name}</h2>
+        <span>NRO°${id}</span>
+    </div>
+    <div class="pokeCard--types">
+        <div class="pokeCard--types--type isHeaderType">
+            <img src="${typesPokemon[type[0]]}">
+        </div>
+        <div class="pokeCardHeader--types--type isHeaderType">
+            <img src="${typesPokemon[type[1]] || typesPokemon["default"]}">
+        </div>
+    </div>
+    </div>`
+    )
+}
+
 function deleteNodes(father){
     while (father.firstChild) {
         father.removeChild(father.firstChild);
     }
 }
 
-export {shadowGenerate, renderPokeCard, deleteNodes, typePoke}
+export {shadowGenerate, renderPokeCard,renderPokeCardHeader ,deleteNodes}
