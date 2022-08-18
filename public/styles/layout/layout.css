@@ -1,0 +1,18 @@
+.l-fragment{
+    max-width: 1300px;
+    min-width: 300px;
+    margin: 0 auto;
+}
+.l-full{
+    min-width: 100%;
+}
+
+.l-wrapp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10em;
+    max-width: 1400px;
+    margin: 8em auto;
+}

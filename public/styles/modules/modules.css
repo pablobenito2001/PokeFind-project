@@ -1,0 +1,114 @@
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5em 0;
+  margin: auto;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  font-size: 10px;
+}
+
+.header--block {
+  line-height: 1em;
+}
+
+.pokeCard {
+  min-width: 400px;
+  height: 400px;
+  -webkit-box-shadow: 40px 40px 75px var(--dark-shadow), -40px -40px 75px var(--ligth-shadow);
+          box-shadow: 40px 40px 75px var(--dark-shadow), -40px -40px 75px var(--ligth-shadow);
+  border-radius: 50px;
+  background-color: transparent;
+  overflow: hidden;
+  padding: 2em;
+  cursor: pointer;
+}
+
+.pokeCard--image {
+  max-height: 200px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+  -webkit-transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.pokeCard--text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 2em;
+  margin: 1em 0;
+  text-transform: uppercase;
+}
+
+.pokeCard--types {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 2em;
+}
+
+.pokeCard--types--type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 60px;
+  padding: 10px;
+  border-radius: 20px;
+  -webkit-box-shadow: 6px 6px 12px var(--dark-shadow), -6px -6px 12px var(--ligth-shadow);
+          box-shadow: 6px 6px 12px var(--dark-shadow), -6px -6px 12px var(--ligth-shadow);
+}
+
+.button {
+  font-size: 2em;
+  padding: 0.5em;
+  background-color: transparent;
+  border-radius: 0.5em;
+  -webkit-box-shadow: 8px 8px 15px var(--dark-shadow), -8px -8px 15px var(--ligth-shadow);
+          box-shadow: 8px 8px 15px var(--dark-shadow), -8px -8px 15px var(--ligth-shadow);
+}
+
+.font-2 {
+  font-size: 2em;
+}
+
+.font-3 {
+  font-size: 3em;
+}
+
+.font-4 {
+  font-size: 4em;
+}
+
+.font-5 {
+  font-size: 5em;
+}
+
+.font-6 {
+  font-size: 6em;
+}
+
+.font-7 {
+  font-size: 7em;
+}
+/*# sourceMappingURL=modules.css.map */
