@@ -12,7 +12,7 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10em;
+    gap: 8em;
     max-width: 1400px;
     margin: 8em auto;
 }

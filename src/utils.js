@@ -37,22 +37,28 @@ function shadowGenerate(color, lum){
     return rgb;
 }
 
+function renderType(array){
+    let code = ""
+    for (let i = 0; i < array.length; i++) {
+        code += `
+        <div class="pokeCard--types--type">
+            <img src="${typesPokemon[array[i]]}" alt="imagen tipo ${typesPokemon[array[i]]}">
+        </div>`
+    }
+    return code;
+}
+
 function renderPokeCard(elem){
     let [name, id, type, sprite] = elem;
     return (`
     <div class="pokeCard is-color" id="${id}">
-    <img src="${sprite}" alt="imagen de pokemon bb" class="pokeCard--image">
+    <img src="${sprite === null ? '../public/images/defaultPokeBall.png' : sprite}" alt="imagen de pokemon bb" class="pokeCard--image">
     <div class="pokeCard--text">
         <h2>${name}</h2>
         <span>NRO°${id}</span>
     </div>
     <div class="pokeCard--types">
-        <div class="pokeCard--types--type">
-            <img src="${typesPokemon[type[0]]}">
-        </div>
-        <div class="pokeCard--types--type">
-            <img src="${typesPokemon[type[1]] || typesPokemon["default"]}">
-        </div>
+        ${renderType(type)}
     </div>
     </div>`
     )
@@ -62,17 +68,17 @@ function renderPokeCardHeader(elem){
     let [name, id, type, sprite] = elem;
     return (`
     <div class="pokeCard isHeader" id="${id}">
-    <img src="${sprite}" alt="imagen de pokemon bb" class="pokeCardHeader--image">
+    <img src="${sprite === null ? '../public/images/defaultPokeBall.png' : sprite}" class="pokeCard--image">
     <div class="pokeCard--text">
         <h2>${name}</h2>
         <span>NRO°${id}</span>
     </div>
     <div class="pokeCard--types">
         <div class="pokeCard--types--type isHeaderType">
-            <img src="${typesPokemon[type[0]]}">
+            <img src="${typesPokemon[type[0]]}"  alt="alt">
         </div>
-        <div class="pokeCardHeader--types--type isHeaderType">
-            <img src="${typesPokemon[type[1]] || typesPokemon["default"]}">
+        <div class="pokeCard--types--type isHeaderType">
+            <img src="${typesPokemon[type[1]] || typesPokemon["default"]}" alt="alt">
         </div>
     </div>
     </div>`

@@ -11,14 +11,15 @@ let init = 0;
 function pages(init, final){
     deleteNodes(wrapper)
     getDataPoke(`?offset=${init}&limit=${final}`)
-    .then(json =>{
-        json.results.map(function (elem){
-            getDataPoke(elem.url.substr(34))
+    .then(json => {
+        for (let i = 0; i < json.results.length; i++) {
+            getDataPoke(json.results[i].url.substr(34))
             .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
-            .then(elem => wrapper.innerHTML += renderPokeCard(elem.getCardData))
-        })
+            .then(poke => wrapper.innerHTML += renderPokeCard(poke.getCardData))
+        }
     })
 }
+
 
 window.onload = function(){
     pages(init, nroPages);
@@ -32,7 +33,7 @@ window.onload = function(){
 };
 
 setInterval(()=>{
-    getDataPoke(Math.floor(Math.random() * 750))
+    getDataPoke(Math.floor(Math.random() * 905))
     .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
     .then(elem => cardHeader.innerHTML = renderPokeCardHeader(elem.getCardData))
 }, 10000)
@@ -41,13 +42,13 @@ const next = document.getElementById('next')
     .addEventListener('click', function(){
         if (init <= 905) {
             init += nroPages;
-            pages(init, pages)
+            pages(init, nroPages)
         }
     }),
 prev = document.getElementById('prev')
     .addEventListener('click', function(){
-        if(init >= 0){
+        if(init >= 1){
             init -= nroPages;
-            pages(init, pages)
+            pages(init, nroPages)
         }
     })
