@@ -34,9 +34,10 @@
           align-items: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  padding: 1.5em;
+  padding: 1em;
   font-size: 1.5em;
   color: var(--white-color);
+  overflow: hidden;
 }
 
 .nav--group {
@@ -51,10 +52,25 @@
           justify-content: center;
 }
 
-.nav--select {
+.nav--label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.nav--select {
+  margin-left: 5px;
+  text-align: center;
+  border: solid 1px var(--red-color);
+  border-radius: 50px;
+}
+
+.nav--search {
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 50px;
+  -webkit-box-shadow: 10px 8px 15px var(--yellow-Dshadow), -10px -8px 15px var(--yellow-Lshadow);
+          box-shadow: 10px 8px 15px var(--yellow-Dshadow), -10px -8px 15px var(--yellow-Lshadow);
 }
 
 .pokeCard {

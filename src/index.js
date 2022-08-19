@@ -6,7 +6,7 @@ const luminate = 0.15,
 nroPages = 20,
 wrapper = document.getElementById('wrapper'),
 cardHeader = document.getElementById('cardHeader')
-let init = 0;
+var init = 0;
 
 function pages(init, final){
     deleteNodes(wrapper)
@@ -30,6 +30,8 @@ window.onload = function(){
     document.documentElement.style.setProperty('--dark-shadow', shadowGenerate(document.documentElement.style.getPropertyValue('--bg-wrapper'), -luminate));
     document.documentElement.style.setProperty('--blue-Lshadow', shadowGenerate(document.documentElement.style.getPropertyValue('--blue-color'), luminate));
     document.documentElement.style.setProperty('--blue-Dshadow', shadowGenerate(document.documentElement.style.getPropertyValue('--blue-color'), -luminate));
+    document.documentElement.style.setProperty('--yellow-Lshadow', shadowGenerate(document.documentElement.style.getPropertyValue('--yellow-color'), luminate));
+    document.documentElement.style.setProperty('--yellow-Dshadow', shadowGenerate(document.documentElement.style.getPropertyValue('--yellow-color'), -luminate));
 };
 
 setInterval(()=>{
