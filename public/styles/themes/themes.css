@@ -15,3 +15,7 @@
 .font-red{
     color: var(--red-color);
 }
+
+.font-white{
+    color: white;
+}

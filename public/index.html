@@ -26,7 +26,7 @@
             <div class="nav--group">
                 <label for="generation" class="nav--label"> 
                     Generacion:
-                    <select name="generation" id="generation" class="nav--select">
+                    <select name="generation" id="generation" class="nav--select is-ActiveInput">
                         <option value="Kanto">Kanto</option>
                         <option value="Jotho">Jotho</option>
                         <option value="Hoenn">Hoenn</option>
@@ -38,7 +38,7 @@
                 </label>
                 <label for="type" class="nav--label">
                     Tipo:
-                    <select name="type" id="type" class="nav--select">
+                    <select name="type" id="type" class="nav--select is-ActiveInput">
                         <option value="all">Todos</option>
                         <option value="normal">Normal</option>
                         <option value="psychic">Psiquico</option>
@@ -48,23 +48,23 @@
                     </select>
                 </label>
             </div>
-            <input type="search" id="search" placeholder="Buscar por ID o nombre" maxlength="20" aria-label="Search through site content" class="nav--search">
+            <input type="search" id="search" placeholder="Buscar por ID o nombre" maxlength="20" aria-label="Search through site content" class="nav--search is-ActiveInput">
         </div>
     </nav>
     <section class="l-wrapp" id="wrapper">
 
     </section>
-    <div class="l-wrapp">
-        <button class="button is-active" id="prev">
+    <div class="buttons">
+        <button class="buttons--button is-active" id="prev">
             Anterior
         </button>
-        <button class="button is-active" id="next"> 
+        <button class="buttons--button is-active" id="next"> 
             Siguiente
         </button>
     </div>
-    <footer class="l-full">
-        <div class="footer">
-
+    <footer class="l-full bg-blue">
+        <div class="footer font-white">
+            <span>Powered by <a href="https://pokeapi.co/" class="display-inline" target="_blank">PokeApi</a></span>
         </div>
     </footer>
     <script src="../src/index.js" type="module" defer></script>

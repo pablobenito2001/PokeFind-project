@@ -38,6 +38,7 @@
   font-size: 1.5em;
   color: var(--white-color);
   overflow: hidden;
+  gap: 2em;
 }
 
 .nav--group {
@@ -61,8 +62,10 @@
 .nav--select {
   margin-left: 5px;
   text-align: center;
-  border: solid 1px var(--red-color);
   border-radius: 50px;
+  padding: 2px;
+  -webkit-box-shadow: 10px 8px 15px var(--yellow-Dshadow), -10px -8px 15px var(--yellow-Lshadow);
+          box-shadow: 10px 8px 15px var(--yellow-Dshadow), -10px -8px 15px var(--yellow-Lshadow);
 }
 
 .nav--search {
@@ -136,7 +139,27 @@
           box-shadow: 6px 6px 12px var(--dark-shadow), -6px -6px 12px var(--ligth-shadow);
 }
 
-.button {
+.footer {
+  max-width: 1300px;
+  padding: 2em;
+  margin: auto;
+}
+
+.buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 3em;
+  margin: 3em 0;
+}
+
+.buttons--button {
   font-size: 2em;
   padding: 0.5em;
   background-color: transparent;
@@ -171,5 +194,13 @@
 
 .font-7 {
   font-size: 7em;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.display-none {
+  display: none;
 }
 /*# sourceMappingURL=modules.css.map */
