@@ -1,12 +1,19 @@
-import { shadowGenerate, renderPokeCard, renderPokeCardHeader,deleteNodes} from "./utils.js";
-import { getDataPoke } from "./getApi.js";
+import { shadowGenerate, renderPokeCard, renderPokeCardHeader, deleteNodes} from "./utils.js";
+import { getData } from "./getApi.js";
 import { Pokemon } from "./classes.js";
 
+const URLpokemon = 'https://pokeapi.co/api/v2/pokemon/',
+URLregion = 'https://pokeapi.co/api/v2/generation/',
+URLpokemonregion = 'https://pokeapi.co/api/v2/pokemon-species/';
+
 const luminate = 0.15,
-nroPages = 20,
 wrapper = document.getElementById('wrapper'),
-cardHeader = document.getElementById('cardHeader')
-var init = 0;
+cardHeader = document.getElementById('cardHeader'),
+selectRegion = document.getElementById('region'),
+selectType = document.getElementById('type'),
+nroPages = 20;
+var init = 0,
+final = nroPages;
 
 Array.prototype.findString = function(string){
     let final = [];
@@ -23,21 +30,60 @@ Array.prototype.findString = function(string){
     return final;
 }
 
-function pages(init, final){
+function pagesChange(value){
     deleteNodes(wrapper)
-    getDataPoke(`?offset=${init}&limit=${final}`)
+    getData(`${URLregion}${value}`)
     .then(json => {
-        for (let i = 0; i < json.results.length; i++) {
-            getDataPoke(json.results[i].url.substr(34))
+        for (let i = 0; i < json.pokemon_species.length; i++) {
+            getData(`${URLpokemon}${json.pokemon_species[i].url.replace(URLpokemonregion, '')}`)
             .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
             .then(poke => wrapper.innerHTML += renderPokeCard(poke.getCardData))
         }
     })
 }
 
+function pagesEvery(init, final){
+    deleteNodes(wrapper)
+    getData(`${URLpokemon}?offset=${init}&limit=${final}`)
+    .then(json => {
+        for (let i = 0; i < json.results.length; i++) {
+            getData(`${URLpokemon}${json.results[i].url.replace(URLpokemon, '')}`)
+            .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
+            .then(poke => wrapper.innerHTML += renderPokeCard(poke.getCardData))
+        }
+    })
+}
+
+function searchPoke(value){
+    deleteNodes(wrapper)
+    getData(`${URLpokemon}?offset=0&limit=905`)
+        .then(elem => elem.results.findString(value))
+        .then(poke => {
+            deleteNodes(wrapper);
+            for (let i = 0; i < poke.length; i++) {
+                getData(`${URLpokemon}${poke[i].url.replace(URLpokemon, '')}`)
+                .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
+                .then(poke => wrapper.innerHTML += renderPokeCard(poke.getCardData))
+            }
+        })
+}
+
+function pagesPoke(url) {
+    deleteNodes(wrapper);
+    getData(url)
+    .then(elem => {
+        for ( init; init < final; init++) {
+            elem.results[init]
+            console.log(elem.results[init].name);
+        }
+    })
+}
+
+pagesPoke(`${URLpokemon}?offset=0&limit=905`)
+
 window.onload = function(){
-    pages(init, nroPages);
-    getDataPoke(Math.floor(Math.random() * 905))
+    pagesEvery(init, final);
+    getData(`${URLpokemon}${Math.floor(Math.random() * 905)}`)
     .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
     .then(elem => cardHeader.innerHTML = renderPokeCardHeader(elem.getCardData))
     document.documentElement.style.setProperty('--ligth-shadow', shadowGenerate(document.documentElement.style.getPropertyValue('--bg-wrapper'), luminate));
@@ -49,43 +95,39 @@ window.onload = function(){
 };
 
 setInterval(()=>{
-    getDataPoke(Math.floor(Math.random() * 905))
+    getData(`${URLpokemon}${Math.floor(Math.random() * 905)}`)
     .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
     .then(elem => cardHeader.innerHTML = renderPokeCardHeader(elem.getCardData))
 }, 10000)
 
 const next = document.getElementById('next')
     .addEventListener('click', function(){
-        if (init <= 905) {
-            init += nroPages;
-            pages(init, nroPages)
+        if (final < 905) {
+            final += nroPages;
+            console.log(init, final);
+            pagesPoke(`${URLpokemon}?offset=0&limit=905`)
         }
     }),
 prev = document.getElementById('prev')
     .addEventListener('click', function(){
-        if(init >= 1){
-            init -= nroPages;
-            pages(init, nroPages)
+        if(final > nroPages){
+            init -= nroPages * 2;
+            final -= nroPages;
+            console.log(init, final);
+            pagesPoke(`${URLpokemon}?offset=0&limit=905`)
         }
     })
 
 const search = document.getElementById('search');
 
 search.addEventListener('input', function(){
-    if (this.value == '') {
-        pages(0, nroPages)
+    if (this.value === '') {
+        pagesEvery(0, final)
     }else{
-        getDataPoke('?offset=0&limit=905')
-        .then(elem => elem.results.findString(search.value))
-        .then(poke => {
-            console.log(poke);
-            deleteNodes(wrapper);
-            for (let i = 0; i < poke.length; i++) {
-                getDataPoke(poke[i].url.substr(34))
-                .then(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default))
-                .then(poke => wrapper.innerHTML += renderPokeCard(poke.getCardData))
-            }
-        })
-
+        searchPoke(this.value)
     }
+})
+
+selectRegion.addEventListener('change', function(){
+    this.value == 0 ? pagesEvery(0, final) : pagesChange(this.value)
 })
