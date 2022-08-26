@@ -1,25 +1,3 @@
-const typesPokemon = {
-    "bug" : '../public/images/pokeTypes/bug.png',
-    "dark" : '../public/images/pokeTypes/dark.png',
-    "dragon" : '../public/images/pokeTypes/dragon.png',
-    "electric" : '../public/images/pokeTypes/electric.png',
-    "fairy" : '../public/images/pokeTypes/fairy.png',
-    "fighting" : '../public/images/pokeTypes/fighting.png',
-    "fire" : '../public/images/pokeTypes/fire.png',
-    "flying" : '../public/images/pokeTypes/flying.png',
-    "ghost" : '../public/images/pokeTypes/ghost.png',
-    "grass" : '../public/images/pokeTypes/grass.png',
-    "ground" : '../public/images/pokeTypes/ground.png',
-    "ice" : '../public/images/pokeTypes/ice.png',
-    "normal" : '../public/images/pokeTypes/normal.png',
-    "poison" : '../public/images/pokeTypes/poison.png',
-    "psychic" : '../public/images/pokeTypes/psychic.png',
-    "rock" : '../public/images/pokeTypes/rock.png',
-    "steel" : '../public/images/pokeTypes/steel.png',
-    "water" : '../public/images/pokeTypes/water.png',
-    "default" : '#'
-}
-
 function shadowGenerate(color, lum){
     color = String(color).replace(/[^0-9a-f]/gi, '');
     lum = lum || 0;
@@ -35,33 +13,6 @@ function shadowGenerate(color, lum){
         rgb = "00" + rgb;
     }
     return rgb;
-}
-
-function renderType(array){
-    let code = ""
-    for (let i = 0; i < array.length; i++) {
-        code += `
-        <div class="pokeCard--types--type">
-            <img src="${typesPokemon[array[i]]}" alt="imagen tipo ${typesPokemon[array[i]]}">
-        </div>`
-    }
-    return code;
-}
-
-function renderPokeCard(elem){
-    let [name, id, type, sprite] = elem;
-    return (`
-    <div class="pokeCard is-color" id="${id}">
-    <img src="${sprite === null ? '../public/images/defaultPokeBall.png' : sprite}" alt="imagen de pokemon bb" class="pokeCard--image">
-    <div class="pokeCard--text">
-        <h2>${name}</h2>
-        <span>NRO°${id}</span>
-    </div>
-    <div class="pokeCard--types">
-        ${renderType(type)}
-    </div>
-    </div>`
-    )
 }
 
 function renderPokeCardHeader(elem){
@@ -91,4 +42,4 @@ function deleteNodes(father){
     }
 }
 
-export {shadowGenerate, renderPokeCard,renderPokeCardHeader ,deleteNodes}
+export {shadowGenerate ,deleteNodes}
