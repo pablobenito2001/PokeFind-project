@@ -49,7 +49,7 @@ class Pokemon{
         for (let i = 0; i < array.length; i++) {
         code += `
         <div class="pokeCard--types--type">
-            <img src="${typesPokemon[array[i]]}" alt="imagen tipo ${typesPokemon[array[i]]}">
+            <img src="${typesPokemon[array[i]]}" alt="type ${array[i]}">
         </div>`
         }
         return code;
@@ -57,7 +57,7 @@ class Pokemon{
 }
 
 class UIwrapper{
-    static getData(url, to, wrapper, searchKey = ''){
+    static getData(url, to, wrapper, searchKey = '', type){
         if (url == 'https://pokeapi.co/api/v2/pokemon/') {
             var resul = 'results',
             del = 'https://pokeapi.co/api/v2/pokemon/';
@@ -69,17 +69,21 @@ class UIwrapper{
         getData(url + to)
         .then(search => this.searchPokemon(search[resul], searchKey))
         .then(elem => elem.map(elem => getData('https://pokeapi.co/api/v2/pokemon/' + elem.url.replace(del, ''))))
-        .then(poke => this.render(poke, wrapper))
+        .then(poke => this.render(poke, wrapper, type))
     }
 
-    static render(array, wrapper){
+    static render(array, wrapper, type){
         Promise.all(array)
         .then(res => res.map(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default)).sort((a, b)=> a.id - b.id))
-        .then(fil => this.filterByType(fil ,''))
+        .then(fil => this.filterByType(fil , type))
         .then(elem => elem.slice(0, 20))
         .then(poke => {
-            for (let i = 0; i < poke.length; i++) {
-                wrapper.innerHTML += poke[i].renderCard()
+            if (poke.length == 0) {
+                throw new Error('no se encontro la busqueda.');
+            }else{
+                for (let i = 0; i < poke.length; i++) {
+                    wrapper.innerHTML += poke[i].renderCard()
+                }
             }
         })
         .catch(e => wrapper.innerHTML = this.showError(e))
@@ -87,11 +91,15 @@ class UIwrapper{
 
     static filterByType(elem ,type){
         let final;
-        if (!type == '') {
-            final = elem.filter((fil) => fil.type.some((some) => some === type))
-            return final;
+        if (Array.isArray(elem)) {
+            if (!type == '') {
+                final = elem.filter((fil) => fil.type.some((some) => some === type))
+                return final;
+            }
+            return elem;
+        }else{
+            throw new Error('Filter is not an array')
         }
-        return elem;
     }
 
     static searchPokemon(elem, key){
@@ -113,16 +121,14 @@ class UIwrapper{
     }
 
     static showError(error){
+        console.error(error);
         return(
             `<div class="message">
-                <img scr="${'../public/images/catchImage.png'}">
-                <h2>Lo lamento, algo salio mal</h2>
-                <span>${error}</span>
+                <img src="${'../public/images/catchImage.png'}" alt="something went wrong" class="message--image">
+                <h2 class="message--title">Lo lamento, ${error.message}</h2>
             </div>`
         )
     }
 }
 
-export {Pokemon, UIwrapper};
-
-// elem.filter((elem) => elem.type.some((some) => some === ''))
+export {UIwrapper};

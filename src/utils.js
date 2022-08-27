@@ -1,4 +1,4 @@
-function shadowGenerate(color, lum){
+    function shadowGenerate(color, lum){
     color = String(color).replace(/[^0-9a-f]/gi, '');
     lum = lum || 0;
 

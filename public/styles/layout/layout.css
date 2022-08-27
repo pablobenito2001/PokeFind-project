@@ -15,4 +15,5 @@
     gap: 8em;
     max-width: 1400px;
     margin: 8em auto;
+    min-height: 400px;
 }

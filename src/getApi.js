@@ -8,7 +8,7 @@ const getData = async (end) =>{
             return json; 
             });
     }catch(e){
-        throw Error('Hubo un error Lo lamento', e)
+        throw new Error('Hubo un error Lo lamento', e)
     }
 }
 
