@@ -26,3 +26,7 @@
     box-shadow: inset 10px 8px 15px var(--yellow-Dshadow),
         inset -10px -8px 15px var(--yellow-Lshadow);
 }
+
+.is-hidden{
+    display: none;
+}

@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Sans', sans-serif;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #14afd6;
+}
+
+.container{
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	position: relative;
+}
+
+.stats{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 95px;
+	height: 95px;
+	position: relative;
+}
+
+.stats svg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform: rotate(270deg);
+}
+
+.stats svg circle:nth-child(2){
+	z-index: 2;
+	stroke: aqua;
+	stroke-dasharray: 251;
+	stroke-dashoffset: 30;
+}
+
+.stats svg circle{
+	position: absolute;
+	fill: transparent;
+	stroke: black;
+	stroke-width: 7;
+	transform: translate(7px, 7px);
+}

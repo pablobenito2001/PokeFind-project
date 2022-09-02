@@ -1,4 +1,4 @@
-import {getData} from './getApi.js'
+import {getDataPoke} from './getApi.js'
 
 class Pokemon{
     constructor(name, type, id, abilities, stats, sprite){
@@ -10,19 +10,28 @@ class Pokemon{
         this.sprite = sprite;
         this.url = 'https://pokeapi.co/api/v2/pokemon/' + id;
     }
-    renderCard(){
+    renderCard(isClass = ''){
         return (`
-        <div class="pokeCard is-color" id="${this.id}}">
-        <img src="${this.sprite === null ? '../public/images/defaultPokeBall.png' : this.sprite}" alt="imagen de pokemon bb" class="pokeCard--image">
-        <div class="pokeCard--text">
-            <h2>${this.name}</h2>
-            <span>NRO°${this.id}</span>
-        </div>
-        <div class="pokeCard--types">
-            ${this.chooseType(this.type)}
-        </div>
+        <div class="pokeCard is-color ${isClass}" id="${this.id}">
+            <img src="${this.sprite === null ? '../public/images/defaultPokeBall.png' : this.sprite}" alt="imagen de pokemon bb" class="pokeCard--image">
+            <div class="pokeCard--text">
+                <h2>${this.name}</h2>
+                <span>NRO°${this.id}</span>
+            </div>
+            <div class="pokeCard--types">
+                ${this.chooseType(this.type)}
+            </div>
         </div>`)
     }
+
+    renderInfoPoke(){
+        return(`
+           <div class="pokeInfo">
+                 
+           </div> 
+        `)
+    }
+
     chooseType(array){
         const typesPokemon = {
             "bug" : '../public/images/pokeTypes/bug.png',
@@ -57,7 +66,39 @@ class Pokemon{
 }
 
 class UIwrapper{
-    static getData(url, to, wrapper, searchKey = '', type){
+    constructor(seach , types){
+        this.saveArray_ = [];
+        this.search_ = seach;
+        this.type_ = types;
+    }
+    set search(value){
+        this.search_ = value;
+    }
+    set type(value){
+        this.type_ = value;
+    }
+    get arrayPoke(){
+        return this.saveArray_
+    }
+
+    async render(url, to){
+        const array = await this.getData(url, to, this.search_);
+        Promise.all(array)
+        .then(res => res.map(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default)).sort((a, b)=> a.id - b.id))
+        .then(fil => this.filterByType(fil , this.type_)) 
+        .then(elem => elem.slice(0, 20))
+        .then(poke => { 
+                   if (!poke.length == 0) {
+                        for (let i = 0; i < poke.length; i++) {
+                            wrapper.innerHTML += poke[i].renderCard()
+                        }
+                   }else{
+                        throw new Error('No se encontro la busqueda')
+                   }})
+        .catch(e => wrapper.innerHTML = this.showError(e))
+    }
+
+    getData(url = 'https://pokeapi.co/api/v2/pokemon/', to = '?offset=0&limit=905', key){
         if (url == 'https://pokeapi.co/api/v2/pokemon/') {
             var resul = 'results',
             del = 'https://pokeapi.co/api/v2/pokemon/';
@@ -66,62 +107,45 @@ class UIwrapper{
             del = 'https://pokeapi.co/api/v2/pokemon-species/';
         }
 
-        getData(url + to)
-        .then(search => this.searchPokemon(search[resul], searchKey))
-        .then(elem => elem.map(elem => getData('https://pokeapi.co/api/v2/pokemon/' + elem.url.replace(del, ''))))
-        .then(poke => this.render(poke, wrapper, type))
+        return (getDataPoke(url + to)
+        .then(search => this.searchPokemon(search[resul] , key))
+        .then(elem => elem.map(elem => getDataPoke('https://pokeapi.co/api/v2/pokemon/' + elem.url.replace(del, ''))))
+        )
     }
 
-    static render(array, wrapper, type){
-        Promise.all(array)
-        .then(res => res.map(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default)).sort((a, b)=> a.id - b.id))
-        .then(fil => this.filterByType(fil , type))
-        .then(elem => elem.slice(0, 20))
-        .then(poke => {
-            if (poke.length == 0) {
-                throw new Error('no se encontro la busqueda.');
-            }else{
-                for (let i = 0; i < poke.length; i++) {
-                    wrapper.innerHTML += poke[i].renderCard()
-                }
-            }
-        })
-        .catch(e => wrapper.innerHTML = this.showError(e))
-    }
-
-    static filterByType(elem ,type){
+    filterByType(elem ,type){
         let final;
-        if (Array.isArray(elem)) {
-            if (!type == '') {
-                final = elem.filter((fil) => fil.type.some((some) => some === type))
-                return final;
-            }
-            return elem;
-        }else{
-            throw new Error('Filter is not an array')
+        if (!Array.isArray(elem)){
+            throw new Error('The filter parameter is not an array')
         }
-    }
-
-    static searchPokemon(elem, key){
-        let final = [];
-        if (!key == '') {
-            for (let i = 0; i < elem.length; i++) {
-                if(elem[i].name.indexOf(key) !== -1) {
-                    if (elem[i].name[0] === key[0]) {
-                        final.push(elem[i])
-                        continue;
-                    }
-                }else{
-                    continue;
-                }
-            }
-        return final;
+        if (!type == '') {
+            final = elem.filter((fil) => fil.type.some((some) => some === type))
+            return final;
         }
         return elem;
     }
 
-    static showError(error){
+    searchPokemon(elem, key){
+        let final = [];
+        if (key == '') {
+            return elem;   
+        }
+        for (let i = 0; i < elem.length; i++) {
+            if(elem[i].name.indexOf(key) !== -1) {
+                if (elem[i].name[0] === key[0]) {
+                    final.push(elem[i])
+                    continue;
+                }
+            }else{
+                continue;
+            }
+        }
+        return final;
+    }
+
+    showError(error){
         console.error(error);
+        console.error(error.status);
         return(
             `<div class="message">
                 <img src="${'../public/images/catchImage.png'}" alt="something went wrong" class="message--image">

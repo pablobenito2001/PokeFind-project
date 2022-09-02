@@ -1,4 +1,4 @@
-const getData = async (end) =>{
+const getDataPoke = async (end) =>{
     try{
         return await fetch(end).then((response) => {
             if (response.headers.get('content-type') != 'application/json; charset=utf-8') {
@@ -12,4 +12,4 @@ const getData = async (end) =>{
     }
 }
 
-export {getData};
+export {getDataPoke};   

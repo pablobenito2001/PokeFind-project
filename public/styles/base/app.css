@@ -29,6 +29,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--bg-wrapper);
+    position: relative;
 }
 
 img, picture, video, iframe, figure {
