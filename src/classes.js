@@ -1,4 +1,5 @@
 import {getDataPoke} from './getApi.js'
+import { deleteNodes } from './utils.js';
 
 class Pokemon{
     constructor(name, type, id, abilities, stats, sprite){
@@ -58,18 +59,21 @@ class Pokemon{
         for (let i = 0; i < array.length; i++) {
         code += `
         <div class="pokeCard--types--type">
-            <img src="${typesPokemon[array[i]]}" alt="type ${array[i]}">
+            <img src="${typesPokemon[array[i]]}" alt="type ${array[i]}" title="${array[i].toUpperCase()} type">
         </div>`
         }
         return code;
     }
 }
 
+//Only God knows how works this code//
 class UIwrapper{
     constructor(seach , types){
-        this.saveArray_ = [];
+        this.saveArray_ = undefined;
         this.search_ = seach;
         this.type_ = types;
+        this.pages_ = 21;
+        this.initialPage = 0;
     }
     set search(value){
         this.search_ = value;
@@ -77,25 +81,51 @@ class UIwrapper{
     set type(value){
         this.type_ = value;
     }
+    set arrayPoke(value){
+        this.saveArray_ = value;
+    }
     get arrayPoke(){
         return this.saveArray_
     }
+    set page(value){
+        if (!Number(value)) {
+            throw new Error('hubo un problema con la paginacion, llame a su programador de confianza Xd')
+        }
+        return this.pages_ = Number(value);
+    }
 
     async render(url, to){
-        const array = await this.getData(url, to, this.search_);
+        deleteNodes(wrapper)
+        const array = await this.getData(url, to, this.search_)
         Promise.all(array)
         .then(res => res.map(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default)).sort((a, b)=> a.id - b.id))
         .then(fil => this.filterByType(fil , this.type_)) 
-        .then(elem => elem.slice(0, 20))
-        .then(poke => { 
-                   if (!poke.length == 0) {
-                        for (let i = 0; i < poke.length; i++) {
-                            wrapper.innerHTML += poke[i].renderCard()
-                        }
-                   }else{
-                        throw new Error('No se encontro la busqueda')
-                   }})
-        .catch(e => wrapper.innerHTML = this.showError(e))
+        .then(elem => {
+            this.arrayPoke = elem;
+            console.log(this.arrayPoke);
+            return this.pagination(elem)
+        })
+        .then(poke => this.loopRender(poke))
+        .catch(e => wrapper.innerHTML = this.showError(e))  
+    }
+
+    pagination(array){
+        let resul;
+        if (!Array.isArray(array)) {
+            throw new Error('pagination parameter is not an array, sorry bro.')
+        }
+        if (array.length < this.pages_) {
+            buttons.classList.add('is-hidden');
+            return array;
+        }
+        if (this.initialPage <= 0) {
+            prev.removeEventListener('click', ()=>{})
+        }
+        if (this.initialPage < array.length) {
+            next.removeEventListener('click', ()=>{})
+        }
+        buttons.classList.remove('is-hidden')
+        return array.slice(0, 21);
     }
 
     getData(url = 'https://pokeapi.co/api/v2/pokemon/', to = '?offset=0&limit=905', key){
@@ -109,12 +139,25 @@ class UIwrapper{
 
         return (getDataPoke(url + to)
         .then(search => this.searchPokemon(search[resul] , key))
-        .then(elem => elem.map(elem => getDataPoke('https://pokeapi.co/api/v2/pokemon/' + elem.url.replace(del, ''))))
+        .then(elem => {
+            this.arrayPoke = elem;
+            return elem.map(elem => getDataPoke('https://pokeapi.co/api/v2/pokemon/' + elem.url.replace(del, '')))
+        })
+        .catch(e => wrapper.innerHTML = this.showError(e))
         )
     }
 
+    loopRender(array){
+        if (!Array.isArray(array)) {
+            throw new Error('loopRender parameter is not an array')
+        }
+        for (let i = 0; i < array.length; i++) {
+            wrapper.innerHTML += array[i].renderCard()
+        }
+    }
+
     filterByType(elem ,type){
-        let final;
+        let final = []
         if (!Array.isArray(elem)){
             throw new Error('The filter parameter is not an array')
         }

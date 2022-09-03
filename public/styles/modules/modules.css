@@ -168,6 +168,32 @@
   border-radius: 20px;
 }
 
+@-webkit-keyframes spin {
+  from {
+    transform: rotate(0);
+    filter: blur(5px);
+  }
+  to {
+    transform: rotate(345deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+    filter: blur(5px);
+  }
+  to {
+    transform: rotate(345deg);
+  }
+}
+.spiner {
+  width: 200px;
+  height: 200px;
+  -webkit-animation: spin 1s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+          animation: spin 1s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+}
+
 .font-tiny {
   font-size: 0.4em;
 }

@@ -7,6 +7,7 @@
     <title>PokeFind</title>
     <link rel="icon" href="./images/pokeball.ico">
     <link rel="stylesheet" href="./styles/index.css">
+    <script src="../src/index.js" type="module" defer></script>
 </head>
 <body>
     <header class="l-full bg-blue">
@@ -66,8 +67,12 @@
             <input type="search" id="search" placeholder="Buscar nombre" maxlength="20" aria-label="Search through site content" class="nav--search is-ActiveInput">
         </div>
     </nav>
-    <section class="l-wrapp" id="wrapper"></section>
-    <div class="buttons">
+    <section class="l-wrapp" id="wrapper">
+        <div class="spiner">
+            <img src="./images/spinner.png" alt="">
+        </div>
+    </section>
+    <div class="buttons is-hidden" id="buttons">
         <button class="buttons--button is-active" id="prev">
             Anterior
         </button>
@@ -80,6 +85,5 @@
             <span>Powered by <a href="https://pokeapi.co/" class="display-inline" target="_blank">PokeApi</a></span>
         </div>
     </footer>   
-    <script src="../src/index.js" type="module" defer></script>
 </body>
 </html>
