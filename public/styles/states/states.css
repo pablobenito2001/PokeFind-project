@@ -30,3 +30,7 @@
 .is-hidden{
     display: none;
 }
+
+.is-disabled{
+    pointer-events: none;
+}

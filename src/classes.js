@@ -69,7 +69,7 @@ class Pokemon{
 //Only God knows how works this code//
 class UIwrapper{
     constructor(seach , types){
-        this.saveArray_ = undefined;
+        this.pokemon_ = []
         this.search_ = seach;
         this.type_ = types;
         this.pages_ = 21;
@@ -81,70 +81,45 @@ class UIwrapper{
     set type(value){
         this.type_ = value;
     }
-    set arrayPoke(value){
-        this.saveArray_ = value;
-    }
-    get arrayPoke(){
-        return this.saveArray_
-    }
     set page(value){
         if (!Number(value)) {
             throw new Error('hubo un problema con la paginacion, llame a su programador de confianza Xd')
         }
-        return this.pages_ = Number(value);
+        return this.initialPage += Number(value);
+    }
+    get pokemon(){
+        return this.pokemon_;
     }
 
     async render(url, to){
-        deleteNodes(wrapper)
+        this.initialPage = 0;
+        buttons.classList.add('is-hidden')
+        deleteNodes(wrapper);
         const array = await this.getData(url, to, this.search_)
         Promise.all(array)
         .then(res => res.map(elem => new Pokemon(elem.name, elem.types.map(elem => elem.type.name), elem.id, elem.abilities, elem.stats, elem.sprites.front_default)).sort((a, b)=> a.id - b.id))
         .then(fil => this.filterByType(fil , this.type_)) 
         .then(elem => {
-            this.arrayPoke = elem;
-            console.log(this.arrayPoke);
-            return this.pagination(elem)
+            this.pokemon_ = elem;
+            this.pagination(elem)
         })
-        .then(poke => this.loopRender(poke))
         .catch(e => wrapper.innerHTML = this.showError(e))  
     }
 
     pagination(array){
-        let resul;
         if (!Array.isArray(array)) {
             throw new Error('pagination parameter is not an array, sorry bro.')
         }
         if (array.length < this.pages_) {
             buttons.classList.add('is-hidden');
-            return array;
+            this.loopRender(array);
+            return;
         }
-        if (this.initialPage <= 0) {
-            prev.removeEventListener('click', ()=>{})
-        }
-        if (this.initialPage < array.length) {
-            next.removeEventListener('click', ()=>{})
-        }
+        prev.classList.toggle('is-disabled', this.initialPage <= 0)
+        next.classList.toggle('is-disabled', this.initialPage + this.pages_ > array.length)
+        window.scroll({top: 100});
         buttons.classList.remove('is-hidden')
-        return array.slice(0, 21);
-    }
-
-    getData(url = 'https://pokeapi.co/api/v2/pokemon/', to = '?offset=0&limit=905', key){
-        if (url == 'https://pokeapi.co/api/v2/pokemon/') {
-            var resul = 'results',
-            del = 'https://pokeapi.co/api/v2/pokemon/';
-        }else if(url == 'https://pokeapi.co/api/v2/generation/'){
-            var resul = 'pokemon_species',
-            del = 'https://pokeapi.co/api/v2/pokemon-species/';
-        }
-
-        return (getDataPoke(url + to)
-        .then(search => this.searchPokemon(search[resul] , key))
-        .then(elem => {
-            this.arrayPoke = elem;
-            return elem.map(elem => getDataPoke('https://pokeapi.co/api/v2/pokemon/' + elem.url.replace(del, '')))
-        })
-        .catch(e => wrapper.innerHTML = this.showError(e))
-        )
+        this.loopRender(array.slice(this.initialPage, this.initialPage + this.pages_));
     }
 
     loopRender(array){
@@ -183,7 +158,26 @@ class UIwrapper{
                 continue;
             }
         }
+        if (final.length == 0) {
+            throw new Error('no se encontro la busqueda.')
+        }
         return final;
+    }
+
+    getData(url = 'https://pokeapi.co/api/v2/pokemon/', to = '?offset=0&limit=905', key){
+        if (url == 'https://pokeapi.co/api/v2/pokemon/') {
+            var resul = 'results',
+            del = 'https://pokeapi.co/api/v2/pokemon/';
+        }else if(url == 'https://pokeapi.co/api/v2/generation/'){
+            var resul = 'pokemon_species',
+            del = 'https://pokeapi.co/api/v2/pokemon-species/';
+        }
+
+        return (getDataPoke(url + to)
+        .then(search => this.searchPokemon(search[resul] , key))
+        .then(elem => elem.map(elem => getDataPoke('https://pokeapi.co/api/v2/pokemon/' + elem.url.replace(del, ''))))
+        .catch(e => wrapper.innerHTML = this.showError(e))
+        )
     }
 
     showError(error){

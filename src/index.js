@@ -1,6 +1,6 @@
 import { shadowGenerate, deleteNodes} from "./utils.js";
 import { UIwrapper } from "./classes.js";
-const uiwrapper = new UIwrapper([], '', '')
+const uiwrapper = new UIwrapper('', '')
 const urls = [
     'https://pokeapi.co/api/v2/pokemon/',
     'https://pokeapi.co/api/v2/generation/',
@@ -54,13 +54,15 @@ window.onload = function(){
     //*Botones//
     const next = document.getElementById('next')
     .addEventListener('click', function(){
-        uiwrapper.page += 21;
-        uiwrapper.render(urls[urlUse], region)
+        uiwrapper.page = 21;
+        deleteNodes(wrapper)
+        uiwrapper.pagination(uiwrapper.pokemon)
     });
     const prev = document.getElementById('prev')
     .addEventListener('click', function(){
-        uiwrapper.page = 0;
-        uiwrapper.render(urls[urlUse], region)
+        uiwrapper.page = -21;
+        deleteNodes(wrapper)
+        uiwrapper.pagination(uiwrapper.pokemon)
     });
 }
 
