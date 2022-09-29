@@ -16,7 +16,7 @@ const allTypes = {
     'psychic': '../public/images/pokeTypes/psychic.png',
     'rock': '../public/images/pokeTypes/rock.png',
     'steel': '../public/images/pokeTypes/steel.png',
-    'water': '../public/images/pokeTypes/water.png',
+    'water': '../public/images/pokeTypes/water.png',    
 }
 
 export default class PokemonId{
