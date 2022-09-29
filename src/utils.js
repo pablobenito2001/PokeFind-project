@@ -1,4 +1,4 @@
-    function shadowGenerate(color, lum){
+function shadowGenerate(color, lum){
     color = String(color).replace(/[^0-9a-f]/gi, '');
     lum = lum || 0;
 
@@ -13,27 +13,6 @@
         rgb = "00" + rgb;
     }
     return rgb;
-}
-
-function renderPokeCardHeader(elem){
-    let [name, id, type, sprite] = elem;
-    return (`
-    <div class="pokeCard isHeader" id="${id}">
-    <img src="${sprite === null ? '../public/images/defaultPokeBall.png' : sprite}" class="pokeCard--image">
-    <div class="pokeCard--text">
-        <h2>${name}</h2>
-        <span>NRO°${id}</span>
-    </div>
-    <div class="pokeCard--types">
-        <div class="pokeCard--types--type isHeaderType">
-            <img src="${typesPokemon[type[0]]}"  alt="alt">
-        </div>
-        <div class="pokeCard--types--type isHeaderType">
-            <img src="${typesPokemon[type[1]] || typesPokemon["default"]}" alt="alt">
-        </div>
-    </div>
-    </div>`
-    )
 }
 
 function deleteNodes(father){

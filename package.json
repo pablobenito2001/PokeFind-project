@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/plaga2001/PokeApi--Plagga/issues"
   },
-  "homepage": "https://github.com/plaga2001/PokeApi--Plagga#readme"
+  "homepage": "https://github.com/plaga2001/PokeApi--Plagga#readme",
+  "dependencies": {
+    "js-algorithms": "^1.9.1"
+  }
 }

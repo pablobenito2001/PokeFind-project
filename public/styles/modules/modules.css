@@ -24,12 +24,24 @@
   font-size: 1.5em;
   color: var(--white-color);
   overflow: hidden;
-  gap: 2em;
+  gap: 1em;
+}
+@media (max-width: 560px) {
+  .nav {
+    flex-direction: column-reverse;
+    gap: 2em;
+  }
 }
 .nav--group {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media (max-width: 560px) {
+  .nav--group {
+    min-width: 100%;
+    justify-content: space-around;
+  }
 }
 .nav--label {
   display: flex;
@@ -47,11 +59,17 @@
   border-radius: 50px;
   box-shadow: 10px 8px 15px var(--yellow-Dshadow), -10px -8px 15px var(--yellow-Lshadow);
 }
+@media (max-width: 560px) {
+  .nav--search {
+    min-width: 100%;
+  }
+}
 
-.pokeCard {
-  min-width: 350px;
+.pokeCard, .pokeHeader {
+  min-width: 330px;
   width: 400px;
   min-height: 400px;
+  margin: 0 10px;
   box-shadow: 40px 40px 70px var(--dark-shadow), -40px -40px 70px var(--ligth-shadow);
   border-radius: 50px;
   background-color: transparent;
@@ -59,27 +77,28 @@
   padding: 3em;
   cursor: pointer;
 }
-.pokeCard--image {
+.pokeCard--image, .pokeHeader--image {
   min-height: 215px;
   max-height: 215px;
   -o-object-fit: contain;
      object-fit: contain;
   filter: grayscale(100%);
-  transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 1.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-.pokeCard--text {
+.pokeCard--text, .pokeHeader--text {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 2em;
   margin: 1em 0;
+  text-overflow: ellipsis;
   text-transform: uppercase;
 }
-.pokeCard--types {
+.pokeCard--types, .pokeHeader--types {
   display: flex;
   gap: 2em;
 }
-.pokeCard--types--type {
+.pokeCard--types--type, .pokeHeader--types--type {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,6 +107,21 @@
   padding: 10px;
   border-radius: 20px;
   box-shadow: 6px 6px 12px var(--dark-shadow), -6px -6px 12px var(--ligth-shadow);
+}
+
+.pokeHeader {
+  box-shadow: 40px 40px 70px var(--blue-Dshadow), -40px -40px 70px var(--blue-Lshadow);
+}
+.pokeHeader--image {
+  filter: unset;
+}
+.pokeHeader--types--type {
+  box-shadow: 6px 6px 12px var(--blue-Dshadow), -6px -6px 12px var(--blue-Lshadow);
+}
+@media (max-width: 840px) {
+  .pokeHeader {
+    display: none;
+  }
 }
 
 .footer {
