@@ -97,3 +97,8 @@ document.getElementById('prev')
 .addEventListener('click', ()=>{
     uiwrapper.prevPage();
 });
+
+document.getElementById('wrapper')
+.addEventListener('click', function(e){
+  console.log(e.target);
+})
