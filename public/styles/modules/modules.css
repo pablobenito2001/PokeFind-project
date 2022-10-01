@@ -72,7 +72,7 @@
   margin: 0 10px;
   box-shadow: 40px 40px 70px var(--dark-shadow), -40px -40px 70px var(--ligth-shadow);
   border-radius: 50px;
-  background-color: transparent;
+  background-color: var(--bg-wrapper);
   overflow: hidden;
   padding: 3em;
   cursor: pointer;
@@ -110,6 +110,7 @@
 }
 
 .pokeHeader {
+  background-color: var(--blue-color);
   box-shadow: 40px 40px 70px var(--blue-Dshadow), -40px -40px 70px var(--blue-Lshadow);
 }
 .pokeHeader--image {
@@ -128,6 +129,8 @@
   max-width: 1300px;
   padding: 2em;
   margin: auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 .buttons {

@@ -70,28 +70,30 @@ document.documentElement.style.setProperty(
     uiwrapper.setDataPoke = await GetData.getDataAll(url);
     uiwrapper.filterChain();
 
-document.getElementById("region").addEventListener("change", function () {
-    if (this.value === "") {
-        changeRegion(URL_POKEMON + "?offset=0&limit=905");
-        return;
-    }
-    changeRegion(URL_GENERATION + this.value);
-});
+    document.getElementById("region").addEventListener("change", function () {
+        if (this.value === "") {
+            changeRegion(URL_POKEMON + "?offset=0&limit=905");
+            return;
+        }
+        changeRegion(URL_GENERATION + this.value);
+        uiwrapper.resetPage();
+    });  
+})(URL_GENERATION + "1");
+
 document.getElementById("search").addEventListener("input", function () {
-    uiwrapper.filterKeys.searchKey = this.value;
-    uiwrapper.filterChain();
+  uiwrapper.filterKeys.searchKey = this.value;
+  uiwrapper.filterChain();
 });
 document.getElementById("type").addEventListener("change", function () {
-    uiwrapper.filterKeys.typeKey = this.value;
-    uiwrapper.filterChain();
-});
-
+  uiwrapper.filterKeys.typeKey = this.value;
+  uiwrapper.filterChain();
+  
+});  
 document.getElementById('next')
 .addEventListener('click', ()=>{
-    uiwrapper.nextPage();
+  uiwrapper.nextPage();
 });
 document.getElementById('prev')
 .addEventListener('click', ()=>{
     uiwrapper.prevPage();
-})
-})(URL_GENERATION + "1");
+});

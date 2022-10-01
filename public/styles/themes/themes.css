@@ -19,3 +19,7 @@
 .font-white{
     color: white;
 }
+
+.font-orange{
+    color: var(--orange-color);
+}

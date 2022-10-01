@@ -36,7 +36,7 @@ export default class PokemonId{
     renderCard(className = 'pokeCard'){
         return(`
         <div class="${className} is-color">
-            <img src="${this.sprite || '../public/images/defaultPokeBall.png'}" class="${className}--image" alt="${this.name}">
+            <img src="${this.sprite || '../public/images/defaultPokeBall.png'}" class="${className}--image" loading="lazy" alt="${this.name}">
             <div class="${className}--text">
                 <h2>${this.name}</h2>
                 <span id="${this.id}">Nro°${this.id}</span>
