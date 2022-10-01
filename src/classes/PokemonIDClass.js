@@ -1,5 +1,3 @@
-import 'images'
-
 const allTypes = {
     'bug' : '.../public/images/pokeTypes/bug.png',
     'dark': '.../public/images/pokeTypes/dark.png',
