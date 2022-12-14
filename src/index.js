@@ -100,5 +100,7 @@ document.getElementById('prev')
 
 document.getElementById('wrapper')
 .addEventListener('click', function(e){
-  console.log(e.target);
+  if (e.target.classList[0] === 'pokeCard') {
+    console.log(e.target.id);
+  }
 })

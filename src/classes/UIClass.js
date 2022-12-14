@@ -24,8 +24,6 @@ export default class UIwrapper{
         document.getElementById('buttons').classList.toggle('is-hidden', array.length <= this.#NRO_PAGES)
         document.getElementById('prev').classList.toggle('is-disabled', this.#INITIAL_PAGE === 0)
         document.getElementById('next').classList.toggle('is-disabled', this.#INITIAL_PAGE >= array.length - this.#NRO_PAGES);
-        console.log(this.#INITIAL_PAGE);
-        console.log(this.#NRO_PAGES);
         for (const j of array.slice(this.#INITIAL_PAGE, this.#INITIAL_PAGE + this.#NRO_PAGES)) {
             wrapper.innerHTML += j.renderCard();
         }
