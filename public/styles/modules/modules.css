@@ -9,8 +9,14 @@
   overflow: hidden;
   color: white;
 }
-.header--block {
-  line-height: 45px;
+.header_title {
+  font-size: 5vmax;
+}
+@media screen and (max-width: 740px) {
+  .header {
+    flex-direction: column;
+    row-gap: 6em;
+  }
 }
 
 .nav {
@@ -66,8 +72,7 @@
 }
 
 .pokeCard, .pokeHeader {
-  min-width: 330px;
-  width: 400px;
+  flex: 400px 1 1;
   min-height: 400px;
   margin: 0 10px;
   box-shadow: 40px 40px 70px var(--dark-shadow), -40px -40px 70px var(--ligth-shadow);
@@ -110,6 +115,8 @@
 }
 
 .pokeHeader {
+  width: 400px;
+  min-width: 250px;
   background-color: var(--blue-color);
   box-shadow: 40px 40px 70px var(--blue-Dshadow), -40px -40px 70px var(--blue-Lshadow);
 }
@@ -118,11 +125,6 @@
 }
 .pokeHeader--types--type {
   box-shadow: 6px 6px 12px var(--blue-Dshadow), -6px -6px 12px var(--blue-Lshadow);
-}
-@media (max-width: 840px) {
-  .pokeHeader {
-    display: none;
-  }
 }
 
 .footer {
@@ -269,4 +271,4 @@
 
 .display-none {
   display: none;
-}/*# sourceMappingURL=modules.css.map */
+}
