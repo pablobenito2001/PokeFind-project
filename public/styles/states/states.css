@@ -1,4 +1,4 @@
-.is-color:hover img{
+.is-hoverCard:hover img{
     filter: unset;
 }
 .is-active:active{
@@ -14,7 +14,9 @@
 
 .is-ActiveInput:focus{
     outline: none;
-    box-shadow: inset 10px 8px 15px var(--yellow-Dshadow),
+    box-shadow: 0px 0px 15px var(--yellow-Dshadow),
+        0px 0px 15px var(--yellow-Lshadow) ,
+        inset 10px 8px 15px var(--yellow-Dshadow),
         inset -10px -8px 15px var(--yellow-Lshadow);
 }
 

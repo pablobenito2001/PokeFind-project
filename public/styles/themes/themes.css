@@ -23,3 +23,7 @@
 .font-orange{
     color: var(--orange-color);
 }
+
+.font-yellow{
+    color: var(--yellow-color);
+}

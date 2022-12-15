@@ -104,3 +104,8 @@ document.getElementById('wrapper')
     console.log(e.target.id);
   }
 })
+
+document.getElementById('warningButton').addEventListener('click', (e) => {
+  document.querySelector('.warning').classList.toggle('warning--open');
+  document.querySelector('.warning_button').classList.toggle('warning_button--open')
+})

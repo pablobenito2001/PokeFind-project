@@ -3,9 +3,3 @@
 @import url('./layout/layout.css');
 @import url('./modules/modules.css');
 @import url('./states/states.css');
-
-#hex{
-    width: 500px;
-    height: 500px;
-    margin: auto;
-}

@@ -43,7 +43,7 @@ img, picture, video, iframe, figure {
 }
 
 a {
-    display: block;
+    display: inline-block;
     text-decoration: none;
     color: inherit;
     font-size: inherit;

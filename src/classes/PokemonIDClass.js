@@ -35,9 +35,9 @@ export default class PokemonId{
      */
     renderCard(className = 'pokeCard'){
         return(`
-        <div class="${className} is-color" id="${this.id}">
+        <div class="${className} is-hoverCard" id="${this.id}">
             <img src="${this.sprite || '../public/images/defaultPokeBall.png'}" class="${className}--image" loading="lazy" alt="${this.name}">
-            <div class="${className}--text">
+            <div class="${className}--text flex-spacing">
                 <h2>${this.name}</h2>
                 <span id="${this.id}">Nro°${this.id}</span>
             </div>
